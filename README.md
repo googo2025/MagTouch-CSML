@@ -1,5 +1,7 @@
 # Causal Spatiotemporal Magnetic Localization
 
+[English manuscript](manuscripts/CSML_Research_Manuscript_EN.pdf) · [完整中文论文](manuscripts/CSML_Research_Manuscript_ZH.pdf) · [English editable text](manuscripts/CSML_Manuscript_EN.md) · [中文可编辑正文](manuscripts/CSML_Manuscript_ZH.md)
+
 CSML estimates local contact position and relative indentation from magnetic history without an indenter identity or commanded-coordinate input. This repository accompanies **Causal Spatiotemporal Magnetic Localization across Contact Shapes**. The manuscript is a research draft, not a published or peer-reviewed article.
 
 ## Trajectory replay
@@ -44,9 +46,12 @@ The released canonical NPZs contain the recorded baseline-subtracted magnetic in
 
 ```bash
 python -m pip install -r requirements.txt
+python scripts/unpack_data.py
 python scripts/evaluate_saved.py --protocol shared
 python scripts/evaluate_saved.py --protocol holdout
 ```
+
+Numeric arrays are distributed in checksum-verified ZIP shards under `data/archives/`; `unpack_data.py` restores the paths below without altering the original bytes.
 
 These commands score frozen predictions without retraining or changing any acceptance threshold. Position scores include every fixed eligible target whether output is accepted or rejected. Aggregation gives equal weight to eligible Trials within each shape and equal weight to shapes; P95 and RMSE are means of Trial-level statistics, not pooled quantiles/RMSE.
 
@@ -72,7 +77,6 @@ This release reproduces inference and saved-result evaluation. It does not yet p
 
 ## Licensing and citation
 
-An explicit code/data license is pending the owner's choice. Do not infer a license grant merely from repository visibility. Author names and affiliations are intentionally not invented. A publication DOI and final bibliographic citation will be added only when available.
+The repository owner initialized this repository with the MIT software license; the existing LICENSE is retained. No separate CC BY data/figure license has been added. Author names and affiliations are intentionally not invented. A publication DOI and final bibliographic citation will be added only when available.
 
 中文说明和完整中文论文见 `manuscripts/`。中文轨迹动图为 `assets/shared_ZH.gif` 和 `assets/holdout_ZH.gif`。
-

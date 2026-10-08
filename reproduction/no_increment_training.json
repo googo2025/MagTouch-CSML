@@ -1,0 +1,26 @@
+{
+  "status": "CLOSED_DEV_SELECTED_ABLATION",
+  "variant": "I_no_increment",
+  "epochs": 293,
+  "updates": 27323,
+  "best_epoch": 292,
+  "best_raw_mean_mm": 0.31186194470131856,
+  "best": {
+    "epoch": 292,
+    "path": "<private path omitted>",
+    "SHA": "63db8c5a13f67308a5f3b8ec43e747768d9f68476132ca05f18d51321b797e3b",
+    "dev_raw_mean_mm": 0.31186194470131856
+  },
+  "stop": "FINITE7200_SECONDS_NOT_CONVERGENCE",
+  "held_arrays_decoded": 0,
+  "loss_coefficients": {
+    "position": 1.0,
+    "increment": 0.0,
+    "anchor": 0.5,
+    "contact": 0.1,
+    "support": 0.2,
+    "error": 0.05,
+    "lift_depth": 0.1
+  },
+  "parameters": 470176
+}

@@ -1,0 +1,8 @@
+{
+  "strict_state_dict_load": true,
+  "all_tensor_values_equal": true,
+  "parameters": 470176,
+  "actual_forward_calls": 0,
+  "optimizer_updates": 0,
+  "architecture_from_original_ast": true
+}

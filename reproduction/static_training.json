@@ -1,0 +1,26 @@
+{
+  "status": "CLOSED_DEV_SELECTED_ABLATION",
+  "variant": "S_static",
+  "epochs": 312,
+  "updates": 29147,
+  "best_epoch": 303,
+  "best_raw_mean_mm": 0.38596210051171825,
+  "best": {
+    "epoch": 303,
+    "path": "<private path omitted>",
+    "SHA": "4b88dde7a313677cf879d6663fc15a6c201f2114ccd43ea944b493fd8974c516",
+    "dev_raw_mean_mm": 0.38596210051171825
+  },
+  "stop": "FINITE7200_SECONDS_NOT_CONVERGENCE",
+  "held_arrays_decoded": 0,
+  "loss_coefficients": {
+    "position": 1.0,
+    "increment": 0.5,
+    "anchor": 0.5,
+    "contact": 0.1,
+    "support": 0.2,
+    "error": 0.05,
+    "lift_depth": 0.1
+  },
+  "parameters": 96913
+}

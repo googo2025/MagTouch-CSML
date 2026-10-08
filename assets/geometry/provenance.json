@@ -1,0 +1,22 @@
+[
+  {
+    "name": "rounded.3mf",
+    "sha256": "879c53b333c2a041a3b95ad18df4742f5a9477d7d2087110a93db5fb444db4cf",
+    "design_not_metrology": true
+  },
+  {
+    "name": "conical.3mf",
+    "sha256": "41f56b13a677f9c5ee8fd9377814f4bdf8bf5294e6e20403056d59f23fc721b1",
+    "design_not_metrology": true
+  },
+  {
+    "name": "hemispherical.3mf",
+    "sha256": "6b54181995f3a99022813d367f6937fee8ebe68863a1e82161f52957c808f2c6",
+    "design_not_metrology": true
+  },
+  {
+    "name": "small_flat.3mf",
+    "sha256": "ed195fd0643b5facf0e9e8026cf1778de08a84f0988af06d625e8521e65441f7",
+    "design_not_metrology": true
+  }
+]

@@ -1,0 +1,580 @@
+{
+  "title": "Causal Spatiotemporal Magnetic Localization across Contact Shapes",
+  "blocks": [
+    {
+      "kind": "heading",
+      "text": "Abstract",
+      "level": 1
+    },
+    {
+      "kind": "paragraph",
+      "text": "Contact localization in a compliant magnetic skin is affected by indenter geometry and loading history. We investigate a geometry unconditioned estimator that combines an instantaneous coordinate map with fast recurrent dynamics and bounded slow memory. The resulting Causal Spatiotemporal Magnetic Localization method receives magnetic measurements, validity flags and native time increments, without indenter identity or commanded coordinates. In a shared multi shape configuration, the fixed estimator achieves a domain balanced raw mean error of 0.234 mm across 97 complete validation trials of rounded, hemispherical and small flat indenters, with 97.94% accepted output coverage. A separately trained shape holdout configuration transfers from rounded and small flat indenters to 260 excluded hemisphere trials, achieving 0.729 mm raw mean error. Removing one constant XYZ offset per complete trial gives paired diagnostic means of 0.201 and 0.539 mm, respectively. The holdout output coverage is 79.70%, and 41.25% of accepted weighted targets exceed 0.5 mm raw error. These results demonstrate multi shape localization with shared weights and measurable transfer to a withheld geometry, while separating coordinate accuracy from output reliability. The proposed memory is a phenomenological state; the evaluation uses nominal motion references rather than independently measured contact deformation."
+    },
+    {
+      "kind": "paragraph",
+      "text": "Keywords: magnetic tactile sensing; contact localization; causal estimation; temporal memory; indenter transfer."
+    },
+    {
+      "kind": "heading",
+      "text": "1 Introduction",
+      "level": 1
+    },
+    {
+      "kind": "paragraph",
+      "text": "A compliant magnetic interface converts contact into distributed magnetic changes. Recovering local position and relative indentation from those changes is attractive because the electronics can be separated from the deformable surface. ReSkin demonstrates this sensing principle and identifies wear and response variation as practical limitations [1]. For localization, however, a single instantaneous measurement vector does not explicitly describe the loading path that produced the current state. A calibration that succeeds on one contact geometry therefore does not by itself establish transfer to another."
+    },
+    {
+      "kind": "paragraph",
+      "text": "Geometry and temporal state create different demands on the inverse estimator. Geometry changes the spatial distribution of deformation; loading and recovery can change the state associated with the same nominal coordinate. Assigning a separate network to each indenter addresses the first demand only when indenter identity is available. Increasing the capacity of an instantaneous map does not explicitly address the second. We instead ask whether a common coordinate map can be supplemented by causal memory to represent trajectory dependent residuals without a geometry input."
+    },
+    {
+      "kind": "paragraph",
+      "text": "Related tactile studies evaluate finite geometry transfer rather than infer it from within geometry accuracy. TacFinRay estimates location and indentation through indirect visual sensing and reports transfer across indenter shapes [2]. FeelAnyForce learns force estimation from primitive contacts and evaluates unseen real objects [3]. Their modalities, targets and reference systems differ from magnetic coordinate estimation, precluding a shared numerical ranking. The question addressed here is narrower: how much trained shape accuracy and excluded shape transfer can be obtained from five three axis magnetic sensors with the same causal architecture?"
+    },
+    {
+      "kind": "paragraph",
+      "text": "We introduce CSML as an implemented combination of an instantaneous map, a fast gated recurrent state and an elapsed time dependent slow state. The design separates coordinate estimation from a fixed acceptance rule, allowing full scope coordinate error and accepted output risk to be evaluated together. The contribution is this task specific decomposition and its experimental characterization, not a new recurrent cell. The experiments distinguish shared multi shape validation from transfer to an excluded hemisphere; formal module comparisons are organized around the role of temporal information rather than around the sequence of model development."
+    },
+    {
+      "kind": "heading",
+      "text": "2 Causal spatiotemporal magnetic localization",
+      "level": 1
+    },
+    {
+      "kind": "heading",
+      "text": "2.1 Input representation and estimation target",
+      "level": 2
+    },
+    {
+      "kind": "paragraph",
+      "text": "Let ΔBₜ contain the 15 baseline relative magnetic channels, vₜ the five sensor validity flags and Δtₜ the native sampling interval. Equation (1) defines 37 features: standardized amplitudes, a normalized direction, log amplitude, log elapsed time and validity. Training statistics define the standardization and amplitude scale aₜᵣ. Direction and amplitude are represented separately so a common network can use field pattern information without discarding response strength. This representation is deterministic and uses no future observations."
+    },
+    {
+      "kind": "equation",
+      "latex": "\\mathbf{x}_t=\\left[\\operatorname{std}_{\\mathcal T}(\\Delta\\mathbf B_t),\\ \\frac{\\Delta\\mathbf B_t}{\\max(\\|\\Delta\\mathbf B_t\\|_2,1\\,\\mu\\mathrm T)},\\ \\log\\frac{\\max(\\|\\Delta\\mathbf B_t\\|_2,1\\,\\mu\\mathrm T)}{a_{\\mathcal T}},\\ \\log(1+\\Delta t_t/(0.03\\,\\mathrm s)),\\ \\mathbf v_t\\right]",
+      "n": 1
+    },
+    {
+      "kind": "paragraph",
+      "text": "The predicted vector pₜ comprises local X, local Y and relative indentation in millimetres. Commands supply the recorded nominal reference only during supervision and evaluation. The inverse input excludes geometry, indenter identity, commanded coordinates and earlier reference positions. State resets occur at recorded segment boundaries; invalid samples do not enter the recurrent stream or applicable supervised losses. This input contract distinguishes a common magnetic estimator from a collection of geometry selected models."
+    },
+    {
+      "kind": "heading",
+      "text": "2.2 Instantaneous coordinates and temporal residuals",
+      "level": 2
+    },
+    {
+      "kind": "paragraph",
+      "text": "The static branch fθ provides an instantaneous coordinate estimate. A GRU [4] encodes the valid causal history into a 225 dimensional fast state hₜ. The residual branch gθ reads the fast state together with a 112 dimensional slow state sₜ, and adds an XYZ correction to the static estimate, as shown in Equation (2) and Figure 1. The static multilayer perceptron has widths 37, 337, 225 and 3 with SiLU activations; the XY and depth residual heads have widths 337, 225, 2 and 337, 112, 1, respectively. The full model has 470176 trainable parameters. Zero initialized residual output layers preserve the initial static prediction."
+    },
+    {
+      "kind": "equation",
+      "latex": "\\mathbf h_t=\\operatorname{GRU}_{\\theta}(\\mathbf x_t,\\mathbf h_{t-1}),\\qquad \\widehat{\\mathbf q}_t=\\mathbf f_{\\theta}(\\mathbf x_t)+\\mathbf g_{\\theta}([\\mathbf h_t,\\mathbf s_t]),\\qquad \\widehat{\\mathbf p}_t=\\operatorname{diag}(10,10,3)\\widehat{\\mathbf q}_t\\ \\mathrm{mm}",
+      "n": 2
+    },
+    {
+      "kind": "figure",
+      "path": "assets/figures/EN/Figure_01.png",
+      "caption": "Figure 1 Implemented CSML pathways. A static map and causal fast and slow states contribute to the coordinate readout. Auxiliary contact and quality heads use stopped gradient inputs and decide acceptance without changing the displayed raw coordinates."
+    },
+    {
+      "kind": "paragraph",
+      "text": "This additive decomposition has an interpretable purpose. The static branch captures repeatable field to coordinate structure, whereas memory allows a correction associated with loading direction, dwell and recovery. The decomposition does not force the learned states to be physical deformation coordinates. Whether each temporal component improves localization remains an empirical question to be tested by the corresponding module comparisons."
+    },
+    {
+      "kind": "heading",
+      "text": "2.3 Slow memory and provable properties",
+      "level": 2
+    },
+    {
+      "kind": "paragraph",
+      "text": "A slow drive tanh(Wₛhₜ+bₛ) is integrated with an exponential coefficient that depends on the native elapsed time. Each learned time constant lies between 0.1 and 2.0 s and is initialized at 0.45 s. The implementation clips the elapsed time to 0 to 1 s, so the effective interval in Equation (3) must be distinguished from an unrestricted physical relaxation law. The slow state supplies a controlled persistence mechanism alongside the more flexible fast recurrence."
+    },
+    {
+      "kind": "equation",
+      "latex": "\\tau_j=0.1+1.9\\,\\sigma(\\eta_j),\\quad \\alpha_{t,j}=\\exp[-\\operatorname{clip}(\\Delta t_t,0,1)/\\tau_j],\\quad \\mathbf s_t=\\boldsymbol\\alpha_t\\odot\\mathbf s_{t-1}+(1-\\boldsymbol\\alpha_t)\\odot\\tanh(\\mathbf W_s\\mathbf h_t+\\mathbf b_s)",
+      "n": 3
+    },
+    {
+      "kind": "paragraph",
+      "text": "Boundedness follows directly from the convex update. If each initial slow component lies in [−1,1], the bounded drive and 0≤αₜ,ⱼ≤1 keep every subsequent component in that interval. For two slow trajectories with identical drive and elapsed times, their difference is multiplied at each step by αₜ,ⱼ; over a sequence, the factor is exp(−Σₜ clip(Δtₜ,0,1)/τⱼ). Thus inherited slow state differences decay as effective elapsed time accumulates. This conditional result does not imply contraction of the coupled GRU or identify a measured material constant."
+    },
+    {
+      "kind": "paragraph",
+      "text": "Causality follows by induction. Features at t use measurements no later than t; the fast and slow states depend on their previous states and the current features; the coordinate heads read only those states. Consequently, changing a future observation cannot change an earlier prediction under a fixed reset history. Prefix, future perturbation and chunk consistency fixtures check this implementation property. Causality and bounded slow memory are structural guarantees, whereas shape transfer and contact observability require experimental evidence."
+    },
+    {
+      "kind": "paragraph",
+      "text": "Replay uses the same stateful causal inference path as online execution. Single frame processing, state carried chunk replay and full sequence evaluation have been checked for numerical equivalence; future input perturbations leave the computed prefix unchanged. With identical magnetic inputs, baselines, timing, validity and reset flags, raw replay outputs are therefore numerically equivalent to online model outputs. Reference coordinates do not feed back into inference."
+    },
+    {
+      "kind": "heading",
+      "text": "2.4 Output acceptance without reference feedback",
+      "level": 2
+    },
+    {
+      "kind": "paragraph",
+      "text": "Separate heads estimate nominal contact probability cₜ, support uₜ and a log space error proxy. Their state and coordinate inputs are detached so the auxiliary objectives do not modify the coordinate path through those inputs. Equation (4) defines the fixed acceptance rule. The rule uses neither true reference error nor indenter labels at inference. Accepted coordinates are unchanged raw predictions, rather than coordinates corrected toward the reference."
+    },
+    {
+      "kind": "equation",
+      "latex": "\\widehat e_t=0.5\\left(\\exp[\\min(\\operatorname{softplus}(a_t),12)]-1\\right)\\,\\mathrm{mm},\\quad A_t=\\mathbf1_{\\mathrm{valid,\\ finite}}\\mathbf1_{c_t\\ge0.5}\\mathbf1_{u_t\\ge0.5}\\mathbf1_{\\widehat e_t\\le0.5\\,\\mathrm{mm}}",
+      "n": 4
+    },
+    {
+      "kind": "paragraph",
+      "text": "Acceptance creates a coverage and risk tradeoff [6], not an accuracy guarantee. We therefore retain rejected predictions in full scope spatial error and separately quantify the risk among accepted targets. This distinction is especially important when the coordinate model transfers to a new shape but the quality estimator is evaluated outside its training distribution."
+    },
+    {
+      "kind": "heading",
+      "text": "3 Experimental methods",
+      "level": 1
+    },
+    {
+      "kind": "heading",
+      "text": "3.1 Specimen and complete trial protocols",
+      "level": 2
+    },
+    {
+      "kind": "paragraph",
+      "text": "Figure 2 shows the original three dimensional design meshes of the rounded, conical, hemispherical and small flat indenters used in the experiments. The common millimetre scale and view preserve both mounting bodies and designed contact ends; printer placement is excluded. These meshes describe the experimental conditions, not manufactured dimensional metrology, and are not inputs to the inverse estimator."
+    },
+    {
+      "kind": "figure",
+      "path": "assets/figures/EN/Figure_02.png",
+      "caption": "Figure 2 Three dimensional design geometry of the four experimental indenters. Millimetre units and view are shared. Orange denotes the designed contact end and grey the mounting structure. Original 3MF component transforms are retained rather than replacing the surfaces with idealized shapes."
+    },
+    {
+      "kind": "paragraph",
+      "text": "The acquisition system uses five three axis magnetic sensing nodes beneath a compliant magnetic tactile interface, producing 15 magnetic channels. A motion platform applies programmed contact trajectories; the records retain magnetic measurements, native timing, baselines and platform commands. Commands and timing define evaluation references, whereas inference receives only causal magnetic histories, validity flags and time increments. System diagrams, acquisition documentation and prior experiment reproduction materials are available in the public repository [7]. That repository describes the apparatus and prior experiments rather than replacing the CSML weights and partitions used here."
+    },
+    {
+      "kind": "paragraph",
+      "text": "Measurements were collected from five three axis magnetic sensors under rounded, conical, hemispherical and small flat contacts. Recorded specimen identity links the acquisitions to the same magnetic sheet; this identity does not establish unchanged mounting, baseline or surface condition. A complete trial, including its loading and recovery sequence, is the partition unit. Coordinate targets are the recorded local nominal motion reference. Table 1 separates the two configurations because trained shape validation and excluded shape transfer answer different questions."
+    },
+    {
+      "kind": "table",
+      "caption": "Table 1 Estimation protocols",
+      "headers": [
+        "Configuration",
+        "Coordinate optimization",
+        "Development selection",
+        "Reported evaluation"
+      ],
+      "rows": [
+        [
+          "Shared multi shape",
+          "381 trials across four shapes",
+          "101 original validation trials",
+          "Rounded hemispherical and small flat validation 97 trials"
+        ],
+        [
+          "Shape holdout",
+          "Rounded 47 and small flat 97 trials",
+          "Rounded 15 and small flat 24 trials",
+          "Excluded hemisphere 260 trials"
+        ]
+      ],
+      "widths": [
+        1.2,
+        1.65,
+        1.65,
+        2
+      ]
+    },
+    {
+      "kind": "paragraph",
+      "text": "The shared configuration uses a two shape historical coordinate initialization and its recorded training normalization, then optimizes across all four shapes. Its selected fixed checkpoint is evaluated here on the 97 nonconical validation trials. This is validation evidence for trained shapes, not an untouched final test. The shape holdout configuration uses a fresh random initialization and normalization from its 144 training trials only. Hemisphere arrays are excluded from optimization, normalization and development selection. The 260 hemisphere trials are unseen by this estimator but were available during study development; they are not a newly collected blind cohort. Experimental configurations were determined during development."
+    },
+    {
+      "kind": "paragraph",
+      "text": "Qualification is defined independently of prediction error. The historical conical weak indentation range below 1.3 mm is excluded from XYZ and error supervision while valid magnetic history is retained. For the shape holdout configuration, 16 late small flat trials are conservatively isolated because surface damage was reported; the onset is unknown and earlier trials are not certified undamaged. The shared checkpoint was trained before this isolation and is not described as retrained on cleaned data. No high error trial is removed from the stated evaluation scope."
+    },
+    {
+      "kind": "heading",
+      "text": "3.2 Training objective",
+      "level": 2
+    },
+    {
+      "kind": "paragraph",
+      "text": "For each task k, eligible shapes, complete trials and valid target frames receive balanced weights as specified in Equation (5). This prevents longer recordings and more numerous shapes from determining the objective solely through their sample counts. Training segment order is shuffled while native order within a segment is preserved. The position term fits normalized XYZ; the increment term penalizes temporal displacement mismatch, a translation invariant quantity. The anchor and nominal lift terms constrain eligible reference conditions. Contact and support use binary cross entropy, and the error head fits log(1+e/0.5 mm) with smooth L1."
+    },
+    {
+      "kind": "equation",
+      "latex": "w_{d,i,t}^{(k)}=\\frac{1}{D_k N_{d,k} T_{di,k}},\\qquad \\mathcal L=\\mathcal L_{\\mathrm{pos}}+0.5\\mathcal L_{\\Delta}+0.5\\mathcal L_{\\mathrm{anchor}}+0.1\\mathcal L_{\\mathrm{contact}}+0.2\\mathcal L_{\\mathrm{support}}+0.05\\mathcal L_{\\mathrm{error}}+0.1\\mathcal L_{\\mathrm{lift}}+0.0005\\mathcal R",
+      "n": 5
+    },
+    {
+      "kind": "paragraph",
+      "text": "Optimization uses Adam [5] with an initial learning rate of 10⁻⁴, batches of 32 segments, chunks of 128 samples, gradient clipping at 5 and parameter regularization of 0.0005. For the shape holdout experiment, raw development macro mean selects the checkpoint. The learning rate halves after 30 epochs without at least 0.001 mm improvement, down to 6.25×10⁻⁶; 50 further nonimproving epochs at that minimum trigger stopping. The selected run stopped after 397 complete epochs. Figure 3 reports the complete training and development curves without using hemisphere scores to select an epoch."
+    },
+    {
+      "kind": "figure",
+      "path": "assets/figures/EN/Figure_03.png",
+      "caption": "Figure 3 Complete shape holdout training and seen shape development curves. Normalized loss components are not spatial errors in millimetres. The vertical marker denotes the checkpoint selected by raw development mean; aligned development errors are diagnostic only."
+    },
+    {
+      "kind": "heading",
+      "text": "3.3 Spatial and accepted output evaluation",
+      "level": 2
+    },
+    {
+      "kind": "paragraph",
+      "text": "All qualified targets are scored, whether accepted or rejected. Equation (6) pairs raw Euclidean error with a diagnostic that removes one constant XYZ vector per complete trial. The vector is fitted over the full fixed target set, not per movement, region or accepted subset. We allow no rotation, scale, smoothing or temporal alignment. The raw errors evaluate the online equivalent replay outputs. Translation removal uses reference coordinates only in evaluation to separate constant bias from residual trajectory mismatch; it does not change the model outputs."
+    },
+    {
+      "kind": "equation",
+      "latex": "e_{it}=\\|\\widehat{\\mathbf p}_{it}-\\mathbf p_{it}\\|_2,\\qquad \\mathbf t_i=\\frac{1}{|\\mathcal M_i|}\\sum_{t\\in\\mathcal M_i}(\\widehat{\\mathbf p}_{it}-\\mathbf p_{it}),\\qquad e^{\\mathrm{tr}}_{it}=\\|\\widehat{\\mathbf p}_{it}-\\mathbf t_i-\\mathbf p_{it}\\|_2",
+      "n": 6
+    },
+    {
+      "kind": "paragraph",
+      "text": "Equation (7) first computes mean, P95 and RMSE within each complete trial, then averages trials within each shape and assigns equal mass to shapes. Macro P95 is therefore the average of trial P95 values rather than a pooled frame percentile. Raw and aligned metrics use identical targets and weights. We report trial counts and target counts to make the evaluated scope explicit."
+    },
+    {
+      "kind": "equation",
+      "latex": "M=\\frac1D\\sum_{d=1}^{D}\\frac1{N_d}\\sum_{i=1}^{N_d}M_i,\\qquad M_i\\in\\left\\{\\frac1{T_i}\\sum_t e_{it},\\ Q_{0.95}(e_{it}),\\ \\sqrt{\\frac1{T_i}\\sum_t e_{it}^2}\\right\\}",
+      "n": 7
+    },
+    {
+      "kind": "paragraph",
+      "text": "Equation (8) defines coverage C, accepted bad target risk R and rejection of good targets F using the same full scope weights. A good target has raw error no greater than 0.5 mm; this definition is used only in evaluation. Conditional ratios are formed after fixing full scope weights, rather than averaging per trial ratios. An empty conditional denominator is undefined, not zero."
+    },
+    {
+      "kind": "equation",
+      "latex": "C=\\frac{\\sum_t w_tA_t}{\\sum_t w_t},\\qquad R=\\frac{\\sum_t w_tA_t\\mathbf1_{e_t>0.5\\,\\mathrm{mm}}}{\\sum_t w_tA_t},\\qquad F=\\frac{\\sum_t w_t(1-A_t)\\mathbf1_{e_t\\le0.5\\,\\mathrm{mm}}}{\\sum_t w_t\\mathbf1_{e_t\\le0.5\\,\\mathrm{mm}}}",
+      "n": 8
+    },
+    {
+      "kind": "heading",
+      "text": "4 Results",
+      "level": 1
+    },
+    {
+      "kind": "heading",
+      "text": "4.1 Shared weights support multiple trained shapes",
+      "level": 2
+    },
+    {
+      "kind": "paragraph",
+      "text": "A single shared configuration yields 0.234 mm raw mean error over 132595 targets in 97 complete validation trials. After the restricted translation diagnostic, the mean is 0.201 mm. The raw macro P95 and RMSE are 0.530 and 0.305 mm, respectively (Table 2). The small difference between raw and aligned aggregate errors indicates that constant offsets explain only part of the error; this result does not rely on reference alignment of the plotted coordinates."
+    },
+    {
+      "kind": "table",
+      "caption": "Table 2 Shared configuration validation",
+      "headers": [
+        "Scope",
+        "Trials and targets",
+        "Mean raw / aligned mm",
+        "P95 raw / aligned mm",
+        "RMSE raw / aligned mm"
+      ],
+      "rows": [
+        [
+          "Rounded",
+          "15 / 31217",
+          "0.330 / 0.280",
+          "0.705 / 0.655",
+          "0.431 / 0.387"
+        ],
+        [
+          "Hemispherical",
+          "52 / 76942",
+          "0.219 / 0.199",
+          "0.555 / 0.493",
+          "0.294 / 0.266"
+        ],
+        [
+          "Small flat",
+          "30 / 24436",
+          "0.154 / 0.123",
+          "0.329 / 0.272",
+          "0.190 / 0.155"
+        ],
+        [
+          "Equal shape aggregate",
+          "97 / 132595",
+          "0.234 / 0.201",
+          "0.530 / 0.473",
+          "0.305 / 0.270"
+        ]
+      ],
+      "widths": [
+        1.2,
+        1.2,
+        1.35,
+        1.35,
+        1.4
+      ]
+    },
+    {
+      "kind": "figure",
+      "path": "assets/figures/EN/Figure_04.png",
+      "caption": "Figure 4 Paired spatial errors by trained shape in the same 97 trial scope. The 15 rounded, 52 hemispherical and 30 small flat trials contribute equal shape mass. Connecting category markers is a visual guide, not a continuous learning trend."
+    },
+    {
+      "kind": "paragraph",
+      "text": "The rounded trajectories have larger error than the small flat contacts in this evaluation. The comparison must be interpreted together with movement type: the earlier small flat examples are stationary indentations, whereas rounded and hemispherical examples include spatial motion. Figure 5 retains the same XYZ limits, physical scale and view for all panels. A small flat stationary trace consequently remains small instead of being magnified to resemble a dynamic path. These curves establish simultaneous use of the same weights across trained shapes; they do not establish that stationary and moving contacts have equal difficulty."
+    },
+    {
+      "kind": "figure",
+      "path": "assets/figures/EN/Figure_05.png",
+      "caption": "Figure 5 Shared CSML predictions for trained shapes. Rows group eight direction or stationary loading examples and compound or loading hold release examples. All XYZ axes use ±8 mm in X and Y and ±3.2 mm in depth with identical physical scale and view. Black curves are nominal references; orange curves are accepted raw outputs. Missing outputs remain gaps."
+    },
+    {
+      "kind": "heading",
+      "text": "4.2 Transfer to an excluded hemisphere",
+      "level": 2
+    },
+    {
+      "kind": "paragraph",
+      "text": "The shape holdout configuration, trained on rounded and small flat contacts, obtains 0.729 mm raw mean error across all 260 hemisphere trials and 401803 targets. The paired translation diagnostic gives 0.539 mm (Table 3). The reduction is larger than in shared shape validation, consistent with a more substantial constant bias contribution under transfer. Even after that bias is removed, mean error, P95 and RMSE remain nonzero, showing residual trajectory mismatch. The diagnostic does not identify whether the bias originates in calibration, contact conditions or material state."
+    },
+    {
+      "kind": "table",
+      "caption": "Table 3 Excluded hemisphere transfer",
+      "headers": [
+        "Scope",
+        "Trials and targets",
+        "Mean raw / aligned mm",
+        "P95 raw / aligned mm",
+        "RMSE raw / aligned mm"
+      ],
+      "rows": [
+        [
+          "All excluded trials",
+          "260 / 401803",
+          "0.729 / 0.539",
+          "1.482 / 1.175",
+          "0.861 / 0.663"
+        ],
+        [
+          "Original validation subset",
+          "52 / 76942",
+          "0.779 / 0.564",
+          "1.659 / 1.268",
+          "0.923 / 0.691"
+        ]
+      ],
+      "widths": [
+        1.2,
+        1.2,
+        1.35,
+        1.35,
+        1.4
+      ]
+    },
+    {
+      "kind": "figure",
+      "path": "assets/figures/EN/Figure_06.png",
+      "caption": "Figure 6 Trial error distributions over the complete excluded hemisphere population. Each of the 260 trials contributes one raw and one aligned mean or P95 value. This is not a pooled frame CDF. Rejected and high error trials remain in the distribution."
+    },
+    {
+      "kind": "paragraph",
+      "text": "Figure 6 shows the full trial distribution; Figures 7 and 8 illustrate trajectories and native time depth profiles for circular motion, compound motion and an X sweep. Display eligibility requires original validation role, at least 100 targets, nominal peak depth at least 0.6 mm, XY span at least 2 mm and coverage at least 90%. Cases are chosen near the eligible action group median raw error. This post hoc selection supports readable output illustrations, not a claim that these cases represent the full population. The displayed examples have 2.6 mm nominal peak depth and 98.9%, 95.4% and 99.4% coverage. Their curves are neither translated nor smoothed."
+    },
+    {
+      "kind": "figure",
+      "path": "assets/figures/EN/Figure_07.png",
+      "caption": "Figure 7 Selected output examples under excluded hemisphere transfer. Circular motion, compound motion and an X sweep share the XYZ scale and view used for trained shapes. Paired errors in panel titles use all qualified targets, not only orange accepted points. Selection is for display only."
+    },
+    {
+      "kind": "figure",
+      "path": "assets/figures/EN/Figure_08.png",
+      "caption": "Figure 8 Native time depth profiles for the same excluded shape examples. Nominal references and accepted raw predictions are displayed without temporal alignment. Depth mismatch remains visible despite visually similar XY paths."
+    },
+    {
+      "kind": "heading",
+      "text": "4.3 Coordinate transfer and output reliability",
+      "level": 2
+    },
+    {
+      "kind": "paragraph",
+      "text": "The shared configuration retains 97.94% of the fixed target mass, with 7.39% accepted bad target risk and 1.02% rejection of good targets. The holdout configuration retains 79.70%, while accepted bad target risk rises to 41.25% (Table 4). Thus transfer of the coordinate readout is stronger than transfer of the acceptance mechanism at the selected error threshold. A high coverage example cannot establish high reliability for all excluded contacts. These conditional quantities also prevent rejection of difficult targets from masquerading as improved full scope accuracy."
+    },
+    {
+      "kind": "table",
+      "caption": "Table 4 Fixed acceptance rule",
+      "headers": [
+        "Configuration and scope",
+        "Coverage %",
+        "Accepted error above 0.5 mm %",
+        "Good target rejection %"
+      ],
+      "rows": [
+        [
+          "Shared validation 97 trials",
+          "97.94",
+          "7.39",
+          "1.02"
+        ],
+        [
+          "Excluded hemisphere 260 trials",
+          "79.70",
+          "41.25",
+          "10.95"
+        ]
+      ],
+      "widths": [
+        2.1,
+        1.1,
+        1.7,
+        1.6
+      ]
+    },
+    {
+      "kind": "heading",
+      "level": 2,
+      "text": "4.4 Formal component comparisons"
+    },
+    {
+      "kind": "paragraph",
+      "text": "Three independently trained comparisons examine instantaneous estimation, slow memory readout and increment supervision under the shape holdout protocol. All use the same 144 training trials, 39 development trials, training normalization, seed and fixed acceptance thresholds; the excluded hemisphere is evaluated only after development selection. The static comparison has 96913 parameters versus 470176 in the recurrent configurations, so it tests the combined effect of temporal structure and capacity rather than a parameter matched temporal intervention. Slow readout removal sets the slow input to the coordinate readout to zero while retaining the full parameter count. Increment removal changes only its objective coefficient from 0.5 to zero."
+    },
+    {
+      "kind": "paragraph",
+      "text": "All comparisons preserve complete trial targets and the same raw/translation diagnostic. The static, no slow readout and no increment runs complete 312, 292 and 293 epochs, respectively, within their declared time budgets; these stops do not establish convergence. The full configuration completes 397 epochs and stops by its development plateau rule. Table 5 therefore reports training dose alongside the common evaluation; this is a finite, single seed comparison, not an equal update or fully converged ablation."
+    },
+    {
+      "kind": "table",
+      "caption": "Table 5 Finite component comparison on the same excluded hemisphere (260 trials, 401803 targets)",
+      "headers": [
+        "Configuration",
+        "Epochs",
+        "Mean raw / aligned mm",
+        "P95 raw / aligned mm",
+        "RMSE raw / aligned mm",
+        "Coverage %"
+      ],
+      "rows": [
+        [
+          "Static mapping",
+          "312",
+          "0.926 / 0.711",
+          "2.022 / 1.625",
+          "1.106 / 0.868",
+          "72.46"
+        ],
+        [
+          "No slow readout",
+          "292",
+          "0.730 / 0.534",
+          "1.476 / 1.172",
+          "0.860 / 0.658",
+          "76.65"
+        ],
+        [
+          "No increment loss",
+          "293",
+          "0.781 / 0.594",
+          "1.621 / 1.281",
+          "0.922 / 0.717",
+          "78.55"
+        ],
+        [
+          "Full CSML",
+          "397",
+          "0.729 / 0.539",
+          "1.482 / 1.175",
+          "0.861 / 0.663",
+          "79.70"
+        ]
+      ],
+      "widths": [
+        1.6,
+        0.7,
+        1.4,
+        1.4,
+        1.4,
+        0.9
+      ]
+    },
+    {
+      "kind": "figure",
+      "path": "assets/figures/EN/Figure_09.png",
+      "caption": "Figure 9 Paired spatial errors of the formal comparisons on the common excluded shape scope. Category connections are visual guides; training doses differ and do not form a continuous improvement sequence. Alignment is diagnostic only."
+    },
+    {
+      "kind": "paragraph",
+      "text": "The full configuration reduces raw mean error from 0.926 to 0.729 mm relative to static mapping, a 21.3% difference in this finite comparison. Removing increment supervision raises mean error to 0.781 mm and macro P95 to 1.621 mm. These observations are consistent with a benefit from temporal estimation and increment regularization under the tested protocol, but different optimization doses and static capacity limit causal attribution. In contrast, removing slow readout yields 0.730 mm raw mean and 0.534 mm aligned mean, versus 0.729 and 0.539 mm for the full model. The negligible raw difference and slightly lower aligned error do not demonstrate an additional coordinate accuracy benefit from slow memory. The full configuration has higher coverage (79.70% versus 76.65%) and lower good target rejection (10.95% versus 14.54%) than the no slow readout comparison, but this joint change is not isolated evidence that slow memory improves reliability. The module results constrain the mechanism claim instead of being forced to support every design choice."
+    },
+    {
+      "kind": "heading",
+      "text": "5 Discussion",
+      "level": 1
+    },
+    {
+      "kind": "paragraph",
+      "text": "The experiments support a distinction between a shape agnostic input contract and empirical shape transfer. CSML never receives an indenter identity, yet shared weights localize several trained shapes at submillimetre mean error. A separate shape holdout configuration recovers useful excluded hemisphere trajectories without shape specific input or weights. These findings support cross indenter use within the evaluated conditions. They do not establish the stronger proposition that every unmeasured object, simultaneous contact pattern or surface state can be localized reliably."
+    },
+    {
+      "kind": "paragraph",
+      "text": "The finite comparisons associate temporal modeling with lower error than the static implementation, while not establishing an added slow readout accuracy benefit. This distinction is important: the structural analysis proves causality and bounded persistence, not the empirical necessity of every state or equivalence to silicone strain. The results support a compact temporal magnetic estimator and motivate a tighter, capacity and optimization matched study of which memory components are needed."
+    },
+    {
+      "kind": "paragraph",
+      "text": "The reference system limits the physical interpretation. Local motion commands define nominal position and relative indentation, not independently measured surface contact or full deformation. Surface damage was reported and its onset is unknown. Historical acquisitions also use different reference origins and baselines even when specimen identity is shared. Translation diagnostics reveal a constant mismatch but cannot resolve these causes. A controlled follow up should surround material exposure with repeated reference motions and independent contact origin measurements rather than correct evaluation labels after viewing predictions."
+    },
+    {
+      "kind": "paragraph",
+      "text": "The two configurations are not a head to head ranking: their training histories and evaluated shape pools differ. Development data selected the shared checkpoint, and the excluded shape scenario was determined during study development. The present transfer experiment uses one random seed. Consequently, the evidence should be treated as finite validation and selected shape transfer, with broader claims requiring locked acquisition cohorts and repeated seeds. This scope still permits a practical conclusion: shared magnetic localization and acceptance quality must be evaluated as distinct capabilities."
+    },
+    {
+      "kind": "heading",
+      "text": "6 Conclusion",
+      "level": 1
+    },
+    {
+      "kind": "paragraph",
+      "text": "CSML combines an instantaneous coordinate map with fast causal dynamics and bounded slow memory to estimate local XYZ from sparse magnetic histories. A common set of weights supports several trained contact shapes, achieving 0.234 mm raw mean error and 97.94% coverage in the reported validation scope. A separately trained shape holdout configuration transfers to an excluded hemisphere at 0.729 mm raw mean error; its 0.539 mm translation removed diagnostic quantifies the residual after a constant offset is removed. The remaining accepted output risk identifies a reliability limitation rather than negating the measured transfer. The study establishes finite cross indenter localization evidence and an explicit framework for distinguishing temporal estimation, bias diagnosis and output acceptance."
+    },
+    {
+      "kind": "heading",
+      "text": "Code and data availability",
+      "level": 1
+    },
+    {
+      "kind": "paragraph",
+      "text": "The CSML implementation, fixed inference weights, canonical numeric records, evaluation protocols, frozen predictions, original indenter design meshes and trajectory animations are provided at https://github.com/googo2025/MagTouch-CSML. The acquisition platform is documented separately in reference [7]."
+    },
+    {
+      "kind": "heading",
+      "text": "References",
+      "level": 1
+    },
+    {
+      "kind": "paragraph",
+      "text": "[1] R. Bhirangi, T. Hellebrekers, C. Majidi and A. Gupta. ReSkin: versatile, replaceable, lasting tactile skins. arXiv:2111.00071, 2021. https://arxiv.org/abs/2111.00071"
+    },
+    {
+      "kind": "paragraph",
+      "text": "[2] S. Nam, B. Deng, L. Y. Lee, J. M. Rossiter and N. F. Lepora. TacFinRay: Soft Tactile Fin Ray Finger with Indirect Tactile Sensing for Robust Grasping. arXiv:2512.06524, 2025. https://arxiv.org/abs/2512.06524"
+    },
+    {
+      "kind": "paragraph",
+      "text": "[3] A. H. Shahidzadeh, G. Caddeo, K. Alapati, L. Natale, C. Fermuller and Y. Aloimonos. FeelAnyForce: Estimating Contact Force Feedback from Tactile Sensation for Vision Based Tactile Sensors. arXiv:2410.02048, 2024. https://arxiv.org/abs/2410.02048"
+    },
+    {
+      "kind": "paragraph",
+      "text": "[4] K. Cho, B. van Merrienboer, C. Gulcehre, D. Bahdanau, F. Bougares, H. Schwenk and Y. Bengio. Learning Phrase Representations using RNN Encoder Decoder for Statistical Machine Translation. arXiv:1406.1078, 2014. https://arxiv.org/abs/1406.1078"
+    },
+    {
+      "kind": "paragraph",
+      "text": "[5] D. P. Kingma and J. Ba. Adam: A Method for Stochastic Optimization. arXiv:1412.6980, 2014. https://arxiv.org/abs/1412.6980"
+    },
+    {
+      "kind": "paragraph",
+      "text": "[6] Y. Geifman and R. El Yaniv. Selective Classification for Deep Neural Networks. arXiv:1705.08500, 2017. https://arxiv.org/abs/1705.08500"
+    },
+    {
+      "kind": "paragraph",
+      "text": "[7] MagTouch RA three dimensional contact reconstruction. Acquisition system diagrams and reproducibility documentation. https://github.com/googo2025/MagTouch-RA-3d-trajectory-recon (accessed 9 October 2026)."
+    }
+  ],
+  "metadata": {
+    "language": "EN",
+    "final": false,
+    "independently_trained_ablations": "CLOSED_FORMALLY_REPORTED_LIMITED_DOSE",
+    "internal_process_excluded": true
+  }
+}

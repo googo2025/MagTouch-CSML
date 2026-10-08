@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="416.16pt" height="180.72pt" viewBox="0 0 416.16 180.72" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-09T01:58:36.276680</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.7, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 180.72 
+L 416.16 180.72 
+L 416.16 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 11.2176 114.4764 
+L 91.5696 114.4764 
+Q 94.78368 114.4764 94.78368 111.15 
+L 94.78368 77.886 
+Q 94.78368 74.5596 91.5696 74.5596 
+L 11.2176 74.5596 
+Q 8.00352 74.5596 8.00352 77.886 
+L 8.00352 111.15 
+Q 8.00352 114.4764 11.2176 114.4764 
+z
+" clip-path="url(#p92a3ae8c4e)" style="fill: #f7f7f7; stroke: #777777; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 103.6224 68.7384 
+L 183.9744 68.7384 
+Q 187.18848 68.7384 187.18848 65.412 
+L 187.18848 32.148 
+Q 187.18848 28.8216 183.9744 28.8216 
+L 103.6224 28.8216 
+Q 100.40832 28.8216 100.40832 32.148 
+L 100.40832 65.412 
+Q 100.40832 68.7384 103.6224 68.7384 
+z
+" clip-path="url(#p92a3ae8c4e)" style="fill: #f7f7f7; stroke: #777777; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 103.6224 147.7404 
+L 183.9744 147.7404 
+Q 187.18848 147.7404 187.18848 144.414 
+L 187.18848 111.15 
+Q 187.18848 107.8236 183.9744 107.8236 
+L 103.6224 107.8236 
+Q 100.40832 107.8236 100.40832 111.15 
+L 100.40832 144.414 
+Q 100.40832 147.7404 103.6224 147.7404 
+z
+" clip-path="url(#p92a3ae8c4e)" style="fill: #f7f7f7; stroke: #777777; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 204.0624 147.7404 
+L 284.4144 147.7404 
+Q 287.62848 147.7404 287.62848 144.414 
+L 287.62848 111.15 
+Q 287.62848 107.8236 284.4144 107.8236 
+L 204.0624 107.8236 
+Q 200.84832 107.8236 200.84832 111.15 
+L 200.84832 144.414 
+Q 200.84832 147.7404 204.0624 147.7404 
+z
+" clip-path="url(#p92a3ae8c4e)" style="fill: #f7f7f7; stroke: #777777; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 296.4672 85.3704 
+L 376.8192 85.3704 
+Q 380.03328 85.3704 380.03328 82.044 
+L 380.03328 48.78 
+Q 380.03328 45.4536 376.8192 45.4536 
+L 296.4672 45.4536 
+Q 293.25312 45.4536 293.25312 48.78 
+L 293.25312 82.044 
+Q 293.25312 85.3704 296.4672 85.3704 
+z
+" clip-path="url(#p92a3ae8c4e)" style="fill: #f7f7f7; stroke: #777777; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 296.4672 160.2144 
+L 376.8192 160.2144 
+Q 380.03328 160.2144 380.03328 156.888 
+L 380.03328 123.624 
+Q 380.03328 120.2976 376.8192 120.2976 
+L 296.4672 120.2976 
+Q 293.25312 120.2976 293.25312 123.624 
+L 293.25312 156.888 
+Q 293.25312 160.2144 296.4672 160.2144 
+z
+" clip-path="url(#p92a3ae8c4e)" style="fill: #f7f7f7; stroke: #777777; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 7.5px; font-family: 'Noto Sans CJK JP'" transform="translate(25.1436 92.203078)">磁场与有效标记</text>
+    <text style="font-size: 7.5px; font-family: 'Noto Sans CJK JP'" transform="translate(28.4811 101.084484)">37维因果特征</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 7.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle" x="143.7984" y="50.905781" transform="rotate(-0 143.7984 50.905781)">静态坐标映射</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 7.5px; font-family: 'Noto Sans CJK JP'" transform="translate(121.12965 125.467078)">快速GRU状态</text>
+    <text style="font-size: 7.5px; font-family: 'Noto Sans CJK JP'" transform="translate(133.80465 134.348484)">225维</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 7.5px; font-family: 'Noto Sans CJK JP'" transform="translate(225.4884 125.467078)">有界慢记忆</text>
+    <text style="font-size: 7.5px; font-family: 'Noto Sans CJK JP'" transform="translate(234.24465 134.348484)">112维</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 7.5px; font-family: 'Noto Sans CJK JP'" transform="translate(310.3932 63.097078)">静态＋时间残差</text>
+    <text style="font-size: 7.5px; font-family: 'Noto Sans CJK JP'" transform="translate(322.742419 71.978484)">XYZ预测</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 7.5px; font-family: 'Noto Sans CJK JP'" transform="translate(310.3932 137.941078)">接触与质量分支</text>
+    <text style="font-size: 7.5px; font-family: 'Noto Sans CJK JP'" transform="translate(314.1432 146.822484)">固定接受规则</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 92.126483 88.438854 
+Q 97.596235 69.569189 102.816971 51.558587 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 100.085864 54.515115 
+L 102.816971 51.558587 
+L 103.543529 55.517389 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 92.439132 104.633837 
+Q 97.595967 115.307932 102.363717 125.176662 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 102.418444 121.152112 
+L 102.363717 125.176662 
+L 99.176913 122.71815 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 185.970449 127.782 
+Q 194.015978 127.782 201.167081 127.782 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 197.567081 125.982 
+L 201.167081 127.782 
+L 197.567081 129.582 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 185.968978 48.927449 
+Q 240.221622 52.938061 293.582273 56.882733 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 290.124772 54.822226 
+L 293.582273 56.882733 
+L 289.859367 58.412429 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 185.872853 114.676458 
+Q 240.219944 96.597285 293.718336 78.800441 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 289.734211 78.22882 
+L 293.718336 78.800441 
+L 290.870564 81.644768 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 285.027928 113.403096 
+Q 290.441055 96.596208 295.579978 80.64068 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 292.763002 83.515509 
+L 295.579978 80.64068 
+L 296.189656 84.619159 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 336.6432 88.198266 
+Q 336.6432 104.910028 336.6432 120.727362 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 338.4432 117.127362 
+L 336.6432 120.727362 
+L 334.8432 117.127362 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 185.968978 140.403449 
+Q 240.221622 144.414061 293.582273 148.358733 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 290.124772 146.298226 
+L 293.582273 148.358733 
+L 289.859367 149.888429 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 286.412411 140.256 
+Q 290.440709 140.256 293.57458 140.256 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 289.97458 138.456 
+L 293.57458 140.256 
+L 289.97458 142.056 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p92a3ae8c4e">
+   <rect x="7.2" y="7.2" width="401.76" height="166.32"/>
+  </clipPath>
+ </defs>
+</svg>

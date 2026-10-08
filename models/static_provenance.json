@@ -1,0 +1,9 @@
+{
+  "variant": "static",
+  "parameters": 96913,
+  "epoch": 303,
+  "original_sha256": "ecc8571eb2ddc3d06d9ae8183fce30dba410c7c7e52ed5363c05ae773e4b5b5e",
+  "state_dict_sha256": "a5fb45e90911d420e9369183d35aa75023bf2d5706c8c83f58dbbbf2da26afcd",
+  "tensor_exact": true,
+  "actual_forward_calls": 0
+}

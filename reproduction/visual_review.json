@@ -1,0 +1,22 @@
+{
+  "manuscript_pdf_pages": {"EN": 14, "ZH": 12},
+  "all_latest_26_pdf_pages_actually_inspected": true,
+  "repository_link_in_both_manuscripts": "https://github.com/googo2025/MagTouch-CSML",
+  "manuscript_pdf_sha256": {
+    "EN": "f613b0a79f001886cd174e70d405b0866a81fb3de7968b31c4ddf3130b4969ca",
+    "ZH": "eef206b040a1ad3ecd77474aa288db566d427a840ef487164f086be814f85c62"
+  },
+  "figures": 9,
+  "tables": 5,
+  "equations": 8,
+  "trajectory_animations": 4,
+  "frames_per_animation": 80,
+  "actual_animation_pixel_review": "First, middle and last frames of all four animations (12 frames), not every frame",
+  "identical_xyz_scale_and_view": true,
+  "gaps_preserved_no_reference_correction": true,
+  "word_delivery": "Withheld pending actual DOCX rendering and page review; missing renderer",
+  "new_neural_inference_in_release_preparation": 0,
+  "new_training": 0,
+  "new_translation_fitting": 0,
+  "server_deletions": 0
+}

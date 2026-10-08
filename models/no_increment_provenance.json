@@ -1,0 +1,9 @@
+{
+  "variant": "no_increment",
+  "parameters": 470176,
+  "epoch": 292,
+  "original_sha256": "28882639a8e84c39efe6834d0b8e310061d515a49f175e8adfaf57d4023aede1",
+  "state_dict_sha256": "c15b8184f5d1a18bcfd3888d8aea2d88c46431b5da66b32d43f2b957ba50db24",
+  "tensor_exact": true,
+  "actual_forward_calls": 0
+}

@@ -1,0 +1,403 @@
+{
+  "status": "CLOSED_COMPARE_AND_BEST897_FROZEN_GRAPHICS",
+  "selected_epoch": 897,
+  "checkpoint_SHA": "393333378e25033acbf95ce425e5331f5ae486daaad09c98cd09c92e3e04e609",
+  "three_domain_selection97": {
+    "trials": 97,
+    "targets": 132595,
+    "domains": {
+      "original_round_had239": {
+        "trials": 15,
+        "targets": 31217,
+        "raw": {
+          "mean_mm": 0.33044253416772884,
+          "p95_mm": 0.7051989407838742,
+          "rmse_mm": 0.430599805091872
+        },
+        "translation_removed": {
+          "mean_mm": 0.27992373669937626,
+          "p95_mm": 0.6547947943433279,
+          "rmse_mm": 0.38726703952786873
+        }
+      },
+      "hemisphere_had239": {
+        "trials": 52,
+        "targets": 76942,
+        "raw": {
+          "mean_mm": 0.218717639158032,
+          "p95_mm": 0.5553265176416067,
+          "rmse_mm": 0.2935533246358064
+        },
+        "translation_removed": {
+          "mean_mm": 0.1992403728615722,
+          "p95_mm": 0.49253198465184317,
+          "rmse_mm": 0.26627174127615777
+        }
+      },
+      "flat_d3_had239": {
+        "trials": 30,
+        "targets": 24436,
+        "raw": {
+          "mean_mm": 0.15363647189838422,
+          "p95_mm": 0.32877702310245266,
+          "rmse_mm": 0.18975435940593008
+        },
+        "translation_removed": {
+          "mean_mm": 0.12292550828783382,
+          "p95_mm": 0.2721833389115707,
+          "rmse_mm": 0.154972637224646
+        }
+      }
+    },
+    "aggregate": {
+      "raw": {
+        "mean_mm": 0.23426554840804836,
+        "p95_mm": 0.5297674938426445,
+        "rmse_mm": 0.30463582971120284
+      },
+      "translation_removed": {
+        "mean_mm": 0.2006965392829274,
+        "p95_mm": 0.47317003930224727,
+        "rmse_mm": 0.2695038060095575
+      }
+    }
+  },
+  "risk_isolated91": {
+    "trials": 91,
+    "targets": 113641,
+    "domains": {
+      "original_round_had239": {
+        "trials": 15,
+        "targets": 31217,
+        "raw": {
+          "mean_mm": 0.33044253416772884,
+          "p95_mm": 0.7051989407838742,
+          "rmse_mm": 0.430599805091872
+        },
+        "translation_removed": {
+          "mean_mm": 0.27992373669937626,
+          "p95_mm": 0.6547947943433279,
+          "rmse_mm": 0.38726703952786873
+        }
+      },
+      "hemisphere_had239": {
+        "trials": 52,
+        "targets": 76942,
+        "raw": {
+          "mean_mm": 0.218717639158032,
+          "p95_mm": 0.5553265176416067,
+          "rmse_mm": 0.2935533246358064
+        },
+        "translation_removed": {
+          "mean_mm": 0.1992403728615722,
+          "p95_mm": 0.49253198465184317,
+          "rmse_mm": 0.26627174127615777
+        }
+      },
+      "flat_d3_had239": {
+        "trials": 24,
+        "targets": 5482,
+        "raw": {
+          "mean_mm": 0.1273495325877588,
+          "p95_mm": 0.2836466621970388,
+          "rmse_mm": 0.1639034511661272
+        },
+        "translation_removed": {
+          "mean_mm": 0.09826465761924554,
+          "p95_mm": 0.2250127457860733,
+          "rmse_mm": 0.12992748876645535
+        }
+      }
+    },
+    "aggregate": {
+      "raw": {
+        "mean_mm": 0.22550323530450656,
+        "p95_mm": 0.5147240402075066,
+        "rmse_mm": 0.2960188602979352
+      },
+      "translation_removed": {
+        "mean_mm": 0.19247625572673133,
+        "p95_mm": 0.4574465082604148,
+        "rmse_mm": 0.2611554231901606
+      }
+    }
+  },
+  "selective": {
+    "BEST897": {
+      "scope97": {
+        "coverage": 0.9793932563604388,
+        "accepted_bad_risk": 0.07387783454386121,
+        "good_rejected": 0.010247571928942635,
+        "fixed_weight_denominators": {
+          "all": 0.9999999999999976,
+          "accepted": 0.9793932563604364,
+          "accepted_bad": 0.07235545294676976,
+          "good": 0.9164289752553632,
+          "good_rejected": 0.009391171841696523
+        }
+      },
+      "scope91": {
+        "coverage": 0.9793794766361863,
+        "accepted_bad_risk": 0.06978224137013868,
+        "good_rejected": 0.010237855653495954,
+        "fixed_weight_denominators": {
+          "all": 0.9999999999999976,
+          "accepted": 0.9793794766361839,
+          "accepted_bad": 0.06834329503158627,
+          "good": 0.9204597153047454,
+          "good_rejected": 0.009423533700147963
+        }
+      }
+    },
+    "LAST1207": {
+      "scope97": {
+        "coverage": 0.9787362716173214,
+        "accepted_bad_risk": 0.08039458690477012,
+        "good_rejected": 0.011070993287881766,
+        "fixed_weight_denominators": {
+          "all": 0.9999999999999976,
+          "accepted": 0.9787362716173189,
+          "accepted_bad": 0.07868509824538925,
+          "good": 0.9101271853318574,
+          "good_rejected": 0.010076011959927718
+        }
+      },
+      "scope91": {
+        "coverage": 0.9788282126018286,
+        "accepted_bad_risk": 0.07580856855770178,
+        "good_rejected": 0.010959236648108599,
+        "fixed_weight_denominators": {
+          "all": 0.9999999999999976,
+          "accepted": 0.9788282126018262,
+          "accepted_bad": 0.07420356566123823,
+          "good": 0.9146484962609484,
+          "good_rejected": 0.010023849320360406
+        }
+      }
+    }
+  },
+  "figures": [
+    {
+      "name": "BEST897_eight_direction_three_tips.png",
+      "cases": [
+        {
+          "id": "c175e934d35b3304",
+          "domain": "original_round_had239",
+          "source_NPZ_SHA": "43afab4a56c9c440eda9589128fb9d4ee4f170db7e96c27eb2754935b2753279",
+          "full_scored_pair": {
+            "id": "c175e934d35b3304",
+            "domain": "original_round_had239",
+            "targets": 1746,
+            "translation_xyz_mm": [
+              0.2126525396062168,
+              -0.030620643752893778,
+              -0.053677331980526925
+            ],
+            "raw": {
+              "mean_mm": 0.3179150345119311,
+              "p95_mm": 0.5798614523925452,
+              "rmse_mm": 0.35647420237762295
+            },
+            "translation_removed": {
+              "mean_mm": 0.2433618092511095,
+              "p95_mm": 0.4492904242520629,
+              "rmse_mm": 0.27934543949633317
+            },
+            "fit_time_ns_first_last": [
+              709860248894700,
+              709906773672000
+            ]
+          },
+          "coverage": 0.9982817869415808,
+          "nominal_peak_depth_mm": 1.399999976158142,
+          "original_record": "data/S20260929_A/Plan_20260929_175742_R332_SOURCE_UI_ACCEPTANCE.json-SOURCE-5-5-5__mag_5x5-had-239/Trial_000013_R332_UI_acceptance_angle_scan_z1p4_dx4_n8_v2_h0p5_rep1_ri1p2_final_5mm_touch_VE___mag_5x5-had-239",
+          "action": "八方向运动",
+          "late_damage_quarantine": false
+        },
+        {
+          "id": "2e634efc5cd60b1e24d7",
+          "domain": "hemisphere_had239",
+          "source_NPZ_SHA": "c781560f68e5767d2b9651a6cd45d74709a01e432aea93239cf5f02fb961c180",
+          "full_scored_pair": {
+            "id": "2e634efc5cd60b1e24d7",
+            "domain": "hemisphere_had239",
+            "targets": 8518,
+            "translation_xyz_mm": [
+              -0.06319359938697808,
+              -0.003662262713508958,
+              -0.060792272174426946
+            ],
+            "raw": {
+              "mean_mm": 0.1887646018220627,
+              "p95_mm": 0.36581674718653684,
+              "rmse_mm": 0.21707591234641985
+            },
+            "translation_removed": {
+              "mean_mm": 0.1719432450752119,
+              "p95_mm": 0.3241742851802099,
+              "rmse_mm": 0.19854321492621277
+            },
+            "fit_time_ns_first_last": [
+              463498066631100,
+              463751855906100
+            ]
+          },
+          "coverage": 0.998708617046255,
+          "nominal_peak_depth_mm": 2.0,
+          "original_record": "new_ui/Plan_20261005_165649_R391_EXEC_07dc03487a88_81dc85030940_6a49abe__mag_5x5-had-239/Trial_000209_M-magnetic__T-Hemispher_81dc8503_angle_scan",
+          "action": "八方向运动",
+          "late_damage_quarantine": false
+        },
+        {
+          "id": "8fbc6c585c60017bec7f",
+          "domain": "flat_d3_had239",
+          "source_NPZ_SHA": "4793b73328c57578712e229b36365f1506f7928f91905a936ced14303c70f27c",
+          "full_scored_pair": {
+            "id": "8fbc6c585c60017bec7f",
+            "domain": "flat_d3_had239",
+            "targets": 221,
+            "translation_xyz_mm": [
+              -0.009239419329726049,
+              -0.013275729049823133,
+              0.09916025496243891
+            ],
+            "raw": {
+              "mean_mm": 0.1245092788369869,
+              "p95_mm": 0.24397941084288385,
+              "rmse_mm": 0.14804979951388397
+            },
+            "translation_removed": {
+              "mean_mm": 0.1007304119673598,
+              "p95_mm": 0.1639604934312367,
+              "rmse_mm": 0.10873994261783713
+            },
+            "fit_time_ns_first_last": [
+              470762035045400,
+              470775063919200
+            ]
+          },
+          "coverage": 0.9864253393665159,
+          "nominal_peak_depth_mm": 1.2000000476837158,
+          "original_record": "new_ui/Plan_20261005_225150_R391_EXEC_07dc03487a88_514305296909_2e2eb04__mag_5x5-had-239/Trial_000272_M-magnetic__T-Flat_D3_e_51430529_press",
+          "action": "定点压入",
+          "late_damage_quarantine": false
+        }
+      ]
+    },
+    {
+      "name": "BEST897_compound_three_tips.png",
+      "cases": [
+        {
+          "id": "b9594300e61ff64d",
+          "domain": "original_round_had239",
+          "source_NPZ_SHA": "f70fb447742f01bfa58a0df97b0a459dce0db488108108a4703ff037a859beed",
+          "full_scored_pair": {
+            "id": "b9594300e61ff64d",
+            "domain": "original_round_had239",
+            "targets": 430,
+            "translation_xyz_mm": [
+              0.16237805238816627,
+              0.08266807161813039,
+              -0.06441440803626942
+            ],
+            "raw": {
+              "mean_mm": 0.44673979914544376,
+              "p95_mm": 0.7529875336996017,
+              "rmse_mm": 0.5031837976602265
+            },
+            "translation_removed": {
+              "mean_mm": 0.3684431788884591,
+              "p95_mm": 0.7922602227348653,
+              "rmse_mm": 0.4645902240713535
+            },
+            "fit_time_ns_first_last": [
+              710056036159800,
+              710077936321700
+            ]
+          },
+          "coverage": 0.9767441860465116,
+          "nominal_peak_depth_mm": 1.7000000476837158,
+          "original_record": "data/S20260929_A/Plan_20260929_175742_R332_SOURCE_UI_ACCEPTANCE.json-SOURCE-5-5-5__mag_5x5-had-239/Trial_000015_R332_UI_acceptance_compound_z1p7_dx4_dym3_v1p5_h0p5_rep2_ri1p2_final_5mm_touch_V__mag_5x5-had-239",
+          "action": "复合XYZ运动",
+          "late_damage_quarantine": false
+        },
+        {
+          "id": "e010c9fdec5175e64702",
+          "domain": "hemisphere_had239",
+          "source_NPZ_SHA": "2598354980167956215cab47df4fe2f2b831d082a6479f18265374bec5a4aed5",
+          "full_scored_pair": {
+            "id": "e010c9fdec5175e64702",
+            "domain": "hemisphere_had239",
+            "targets": 932,
+            "translation_xyz_mm": [
+              -0.03493679497718747,
+              -0.03585965665209191,
+              0.004358398732069736
+            ],
+            "raw": {
+              "mean_mm": 0.11907408759053748,
+              "p95_mm": 0.2389577648429026,
+              "rmse_mm": 0.1512654909196486
+            },
+            "translation_removed": {
+              "mean_mm": 0.10993526441060442,
+              "p95_mm": 0.21672908151501435,
+              "rmse_mm": 0.14267360822931002
+            },
+            "fit_time_ns_first_last": [
+              463959027636300,
+              464005855557900
+            ]
+          },
+          "coverage": 0.9978540772532188,
+          "nominal_peak_depth_mm": 2.0,
+          "original_record": "new_ui/Plan_20261005_165649_R391_EXEC_07dc03487a88_81dc85030940_6a49abe__mag_5x5-had-239/Trial_000211_M-magnetic__T-Hemispher_81dc8503_compound",
+          "action": "复合XYZ运动",
+          "late_damage_quarantine": false
+        },
+        {
+          "id": "294631be98771f725015",
+          "domain": "flat_d3_had239",
+          "source_NPZ_SHA": "dfe607792b859a4acb8d0c0ea243b13dcbf84a3ff323ddfb9fa80a0c7909eb6f",
+          "full_scored_pair": {
+            "id": "294631be98771f725015",
+            "domain": "flat_d3_had239",
+            "targets": 388,
+            "translation_xyz_mm": [
+              -0.0015043269137170205,
+              -0.0016563787081845336,
+              0.028912779961511034
+            ],
+            "raw": {
+              "mean_mm": 0.047331258658597795,
+              "p95_mm": 0.11139335989283358,
+              "rmse_mm": 0.05614939703601794
+            },
+            "translation_removed": {
+              "mean_mm": 0.04097089710773455,
+              "p95_mm": 0.09563485704820716,
+              "rmse_mm": 0.04808117461665601
+            },
+            "fit_time_ns_first_last": [
+              474401671523900,
+              474422931535700
+            ]
+          },
+          "coverage": 1.0,
+          "nominal_peak_depth_mm": 1.2000000476837158,
+          "original_record": "new_ui/Plan_20261005_225150_R391_EXEC_07dc03487a88_514305296909_2e2eb04__mag_5x5-had-239/Trial_000373_M-magnetic__T-Flat_D3_e_51430529_load_hold_release",
+          "action": "加载—保持—释放",
+          "late_damage_quarantine": false
+        }
+      ]
+    }
+  ],
+  "new_NN": 0,
+  "new_training": 0,
+  "new_translation_fit": 0,
+  "original_reference_masks_time_roles_unchanged": true,
+  "parent_extra_training_norm_and_seen_unseen_roles_not_equal": true,
+  "late_flat_training_membership_not_rewritten": true,
+  "pixel_QA": "PENDING",
+  "server_deletions": 0
+}
